@@ -2,30 +2,42 @@
 
 Repo de práctica de testing para **MiniModa**, una tienda online ficticia de ropa para chicos.
 
-Sitio a probar: https://minimoda-navy.vercel.app
+Sitio a probar: https://minimoda-navy.vercel.app/
 
-Acá no está el código de la tienda. Este repo guarda solo los artefactos de testing: plan, casos, bugs y evidencias.
+Acá no está el código de la tienda, solo lo que producís vos como tester.
 
-## Estructura
+## Paso a paso (sin terminal)
 
-```
-qa/
-├── plan-de-pruebas.md   # alcance, riesgos y estrategia
-├── casos-qase.csv       # casos listos para importar en Qase
-├── plantilla-caso.md    # plantilla de caso de prueba
-├── plantilla-bug.md     # plantilla de reporte de bug
-├── bugs/                # un archivo .md por bug
-└── evidencias/          # capturas (PNG) de los casos y bugs
-```
+| # | Paso | Tiempo |
+|---|------|--------|
+| 1 | **Prepará:** abrí MiniModa https://minimoda-navy.vercel.app/ | 5 min |
+| 2 | **Elegí la superficie:** chat o cowork (no CLI) para armar los casos del registro. Anotá por qué. | 5 min |
+| 3 | **Preguntale a Gemini:** 3 preguntas sobre la página. Anotá un acierto y un error o invento. | 10 min |
+| 4 | **Probá un modo:** en chat o cowork. | 15 min |
+| 5 | **Otra superficie:** la misma tarea en otro lugar. Compará los resultados en 3 líneas. | 15 min |
+| 6 | **Pasalo a Qase:** cargá tus 3 mejores casos con pasos y resultado esperado, revisados contra la página. | 10 min |
+| 7 | **Mapa del harness:** en tu archivo, qué fue modelo, app, harness, MCP y skill o reglas. | 5 min |
+| 8 | **Entregá:** subí el archivo y pegá el link del repo en el Telegram. | 5 min |
 
-## Cómo trabajar (sin terminal)
+## Cómo subir tu archivo sin terminal
 
-1. Hacé **Fork** de este repo a tu cuenta.
-2. Bajá tu fork con **Code → Download ZIP** y descomprimilo.
-3. Con **Codex en el chat**, analizá una funcionalidad del sitio (registro, carrito o checkout) y armá los casos.
-4. Con **Codex en la app de escritorio de ChatGPT**, abrí la carpeta descomprimida y pedile que cree los archivos de `qa/` usando las plantillas.
-5. Revisá lo que generó y probá cada caso en el sitio.
-6. En tu fork, en GitHub web: **Add file → Upload files**, subí tus archivos de `qa/`, elegí **Create a new branch** y abrí el **Pull request** dentro de tu fork.
-7. Revisá **Files changed** antes de mergear.
+1. Hacé **Fork** de este repo.
+2. En tu fork, abrí `clase-01/practica.md` y tocá el lápiz (**Edit**). Completalo ahí o pegá lo que armaste.
+3. Para las capturas: **Add file → Upload files** dentro de `clase-01/evidencias/`.
+4. Al guardar, elegí **Create a new branch** y abrí el **Pull request** dentro de tu fork, o hacé commit directo en tu `main`.
 
-No pegues tokens, contraseñas ni datos personales reales en el chat ni en el repo. Usá datos inventados.
+## Checklist de entrega
+
+- [ ] Elegiste la superficie y explicaste por qué.
+- [ ] 3 preguntas a Gemini, con un acierto y un error.
+- [ ] Comparación de 3 líneas entre dos superficies.
+- [ ] 3 casos en Qase con pasos y resultado esperado.
+- [ ] Ningún caso inventado: todo se ve en la página.
+- [ ] Tabla modelo/app/harness/MCP/skill completa.
+- [ ] Capturas sin datos reales, claves ni tokens.
+
+## Dónde se entrega
+
+- **GitHub:** `clase-01/practica.md` en tu fork.
+- **Qase:** proyecto MiniModa.
+- **Telegram:** el link de tu repo.
