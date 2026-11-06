@@ -1,0 +1,73 @@
+## Directorio de trabajo
+
+`/Users/macbook/TestingAI-Clase4-Cursor-20261106/minimoda-test`  
+Rama: `practica/simulacion-cursor-mac` · remote `origin` → fork `Simonethg/minimoda-test`
+
+---
+
+## `package.json`
+
+- Nombre: `minimoda-test` · demo: https://minimoda-navy.vercel.app/
+- **`scripts`: `{}`** (no hay script npm de test)
+- DevDeps: `@playwright/test` `^1.65.0`, `@types/node` `^26.6.6`
+- `node_modules` y el binario `playwright` **están presentes** en disco
+
+---
+
+## Config Playwright (`playwright.config.ts`)
+
+| Opción | Valor |
+|---|---|
+| `testDir` | `./tests` |
+| `fullyParallel` | `true` |
+| Proyecto activo | solo **`chromium`** (Desktop Chrome) |
+| `baseURL` | comentado / no definido |
+| `webServer` | comentado |
+| Reporter | `html` |
+| `trace` | `on-first-retry` |
+| CI | `forbidOnly`, `retries: 2`, `workers: 1` |
+
+---
+
+## Tests que existen
+
+**`tests/pago.spec.ts`** (demo MiniModa `/checkout`):
+1. `PAGO-01 · completar compra con datos sintéticos válidos`
+2. `PAGO-0X · CVV de dos dígitos muestra error de formato`
+
+**`tests/example.spec.ts`** (plantilla Playwright, **no** MiniModa — va a `playwright.dev`):
+1. `has title`
+2. `get started link`
+
+Caso documentado en `casos/pago.md` (PAGO-01 y PAGO-0X). Demo permitida en reglas: `https://minimoda-navy.vercel.app/checkout`.
+
+---
+
+## Comando para ejecutarlos
+
+No hay script en `package.json`. Según `AGENTS.md`:
+
+```bash
+npx playwright test
+```
+
+Variantes útiles (no comprobadas en esta sesión):
+- un archivo: `npx playwright test tests/pago.spec.ts`
+- un test: `npx playwright test -g "PAGO-01"`
+
+---
+
+## Permisos / modo visibles
+
+| Dato | Estado |
+|---|---|
+| **Ask mode** (esta sesión) | Activo: no editar, no instalar, no correr cambios |
+| Pedido tuyo | “Todavía no edites ni instales” |
+| Reglas repo | Solo demo MiniModa; sin secretos; sin `test.skip`/`fixme`; correr suite tras cambiar tests |
+| Skill `caso-a-playwright` | “Corré la suite **si los permisos lo permiten**” |
+| Dependencias en disco | `node_modules` + `@playwright/test` presentes |
+| Browsers Chromium de Playwright instalados | **A VERIFICAR** (no corrí `playwright install` ni la suite) |
+| Resultado verde/rojo de la suite | **A VERIFICAR** (no ejecuté tests) |
+| Alcance red a `minimoda-navy.vercel.app` | **A VERIFICAR** |
+
+No edité ni instalé nada.

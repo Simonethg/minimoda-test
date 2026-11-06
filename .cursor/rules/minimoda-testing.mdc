@@ -1,0 +1,7 @@
+---
+description: Reglas MiniModa TestingAI Clase 4
+globs: ["**/*"]
+alwaysApply: true
+---
+Seguí AGENTS.md y tests/AGENTS.md.
+Solo demo MiniModa. Sin secretos. Sin test.skip/fixme.

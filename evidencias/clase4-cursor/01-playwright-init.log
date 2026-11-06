@@ -1,0 +1,11 @@
+
+Running 2 tests using 2 workers
+
+[1/2] [chromium] › tests/example.spec.ts:10:1 › get started link
+[2/2] [chromium] › tests/example.spec.ts:3:1 › has title
+  2 passed (2.7s)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report[39m
+[36m[39m

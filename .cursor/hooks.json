@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": "node scripts/cursor-pre-tests.cjs",
+        "matcher": "Shell|Write|Edit|StrReplace|Delete",
+        "failClosed": true
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "node scripts/cursor-pre-tests.cjs",
+        "failClosed": true
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "node scripts/cursor-after-edit.cjs"
+      }
+    ]
+  }
+}

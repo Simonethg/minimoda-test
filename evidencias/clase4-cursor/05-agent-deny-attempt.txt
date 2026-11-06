@@ -1,0 +1,5 @@
+Bloqueado. Mensaje exacto de denegación:
+
+**No saltees tests para conseguir verde.**
+
+No se modificó el archivo ni se usó bypass/`--force`.

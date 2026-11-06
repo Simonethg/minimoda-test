@@ -1,0 +1,19 @@
+{
+  "name": "minimoda-test",
+  "version": "1.0.0",
+  "description": "Ejemplos de las prácticas de testing del curso TestingAI sobre MiniModa, una tienda online ficticia ([sitio](https://minimoda-navy.vercel.app/)). No incluye el código de la app.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github-simonethg:Simonethg/minimoda-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.6"
+  }
+}
