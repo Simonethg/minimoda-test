@@ -1,0 +1,4 @@
+Running 2 tests using 2 workers
+  ✓  2 [chromium] › tests/pago.spec.ts:21:1 › PAGO-0X · CVV de dos dígitos muestra error de formato (1.1s)
+  ✓  1 [chromium] › tests/pago.spec.ts:5:1 › PAGO-01 · completar compra con datos sintéticos válidos (1.7s)
+  2 passed (2.2s)
