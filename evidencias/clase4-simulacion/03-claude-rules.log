@@ -1,0 +1,59 @@
+Permission allow rule (../../.claude/settings.json): Write(//tmp/**) is not matched by file permission checks — only Edit(path) rules are. Use Edit(//tmp/**) instead (Edit rules cover all file-editing tools).
+Revisé el repo sin editar nada: listé archivos, busqué `CLAUDE*.md` / `AGENTS.md` / `.claude/` y leí `tests/AGENTS.md` y `tests/CLAUDE.md`.
+
+## 1. Fuentes de instrucciones
+
+**Cargadas al iniciar la sesión** (aparecen en mi contexto):
+
+| # | Ruta | Alcance | Contenido |
+|---|---|---|---|
+| 1 | `/Users/macbook/.claude/CLAUDE.md` | Global (todos tus proyectos) | Reglas de [org-omitida]: carpeta de memoria, trabajar en `~/[org-omitida]`, cuenta de GitHub `[cuenta-personal-omitida]` |
+| 2 | `minimoda-test/CLAUDE.md` | Proyecto | Solo tiene `@AGENTS.md`, que importa el archivo 3 |
+| 3 | `minimoda-test/AGENTS.md` | Proyecto (entra por el import de 2) | Acuerdos del repo |
+
+**Existen pero no se cargaron al iniciar:**
+
+| Ruta | Estado |
+|---|---|
+| `minimoda-test/tests/CLAUDE.md` | Solo tiene `@AGENTS.md`, que apunta a `tests/AGENTS.md`. Un `CLAUDE.md` dentro de una subcarpeta se carga recién cuando se trabaja con archivos de esa carpeta. Este no estaba en mi contexto inicial. Ahora conozco su contenido porque lo abrí a mano, y eso no es lo mismo que una carga automática. |
+| `minimoda-test/tests/AGENTS.md` | Llega solo a través del import de `tests/CLAUDE.md`. Un `AGENTS.md` suelto no se carga por sí mismo. |
+
+**Qué no pude comprobar o no aplica:**
+- La memoria automática de este proyecto (`~/.claude/projects/-Users-macbook-TestingAI-...-minimoda-test/memory/MEMORY.md`): no aparece ningún contenido suyo en mi contexto, así que no puedo afirmar que tenga algo cargado.
+- La memoria de [org-omitida] (`~/.claude/projects/-Users-macbook/memory/`): la regla global pide leerla solo para trabajo de [org-omitida]. Esto es MiniModa, así que no la leí.
+- En el repo no hay `.claude/` (ni settings ni rules), y tampoco hay `CLAUDE.local.md`.
+
+## 2. Reglas generales (raíz, valen para todo el repo)
+
+Vienen de `AGENTS.md`:
+- Trabajar solo dentro de este repo y con la demo de MiniModa.
+- No usar producción ni datos reales de pago.
+- No guardar secretos, tokens ni claves en archivos, logs o commits.
+- Pedir confirmación antes de agregar dependencias.
+- No borrar tests ni saltearlos para conseguir verde.
+- Correr `npx playwright test` después de cambiar tests.
+- Informar qué se corrió y qué no se pudo verificar.
+
+A esto se suman las reglas globales del archivo 1. Son de [org-omitida], así que en este repo casi no aplican.
+
+## 3. Reglas que aplican solo en `tests/`
+
+Vienen de `tests/AGENTS.md`, importado por `tests/CLAUDE.md`:
+- Usar `getByRole` o `getByLabel` con nombres que se vean en la UI.
+- No usar `waitForTimeout` ni esperas fijas.
+- Incluir el ID del caso en el nombre de cada test.
+- Comprobar el resultado esperado con assertions de la UI.
+- Si falta un texto o un locator, marcarlo **A VERIFICAR** en lugar de inventarlo.
+- No usar `test.skip` ni `test.fixme` para ocultar fallos.
+- La única demo permitida es `https://minimoda-navy.vercel.app/checkout`.
+
+## 4. Qué recibiría un archivo de `src/`
+
+En este repo **no existe `src/`**, así que esto es hipotético. Un archivo en `minimoda-test/src/` recibiría:
+- Las reglas globales (`~/.claude/CLAUDE.md`).
+- Las del proyecto (`CLAUDE.md` raíz → `AGENTS.md`).
+- Un `src/CLAUDE.md`, si algún día existiera.
+
+**No recibiría nada de `tests/`.** Los `CLAUDE.md` de subcarpetas se cargan solo para archivos dentro de esa carpeta. Hacia arriba sí se heredan (de la carpeta a la raíz), pero nunca de lado entre carpetas hermanas. Por eso reglas como "nada de `waitForTimeout`" o "ID del caso en el nombre" no llegarían a `src/`.
+
+Nota: si en una misma sesión ya se cargó `tests/CLAUDE.md` por haber trabajado en `tests/`, ese texto queda en la conversación. Las reglas siguen siendo de `tests/` y no pasan a valer para `src/`, pero conviene tenerlo en cuenta.

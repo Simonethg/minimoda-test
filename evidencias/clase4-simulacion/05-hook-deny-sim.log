@@ -1,0 +1,5 @@
+=== SIM deny test.skip ===
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","permissionDecision":"deny","permissionDecisionReason":"No saltees tests para conseguir verde."}}
+
+=== SIM inocua ===
+(vacío = no deny)

@@ -1,0 +1,12 @@
+
+Running 2 tests using 2 workers
+
+(node:86276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:86277) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/2] [chromium] › tests/pago.spec.ts:27:1 › PAGO-01 · compra con datos sintéticos válidos muestra «Compra confirmada»
+[2/2] [chromium] › tests/pago.spec.ts:35:1 › PAGO-0X · CVV de 2 dígitos muestra error de formato y seguís en checkout
+  2 passed (1.0s)

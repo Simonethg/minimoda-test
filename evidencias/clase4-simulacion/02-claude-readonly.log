@@ -1,0 +1,41 @@
+Permission allow rule (../../.claude/settings.json): Write(//tmp/**) is not matched by file permission checks — only Edit(path) rules are. Use Edit(//tmp/**) instead (Edit rules cover all file-editing tools).
+Revisé el repo sin editar ni instalar nada.
+
+## Directorio de trabajo
+`/Users/macbook/TestingAI-Clase4-Simulacion-20261106/minimoda-test`, en la rama `practica/simulacion-alumno-mac`.
+
+Cambios todavía sin commit: `.gitignore` modificado, y `package.json`, `package-lock.json`, `playwright.config.ts`, `tests/` y `evidencias/` sin rastrear. También existen `node_modules/`, `playwright-report/` y `test-results/`, pero el `.gitignore` los ignora.
+
+## package.json
+- **`scripts` está vacío (`{}`).** No hay `npm test` ni ningún otro script.
+- Dependencias de desarrollo: `@playwright/test ^1.65.0` y `@types/node ^26.6.6`.
+- `"type": "commonjs"`. El repo apunta a `github.com/Simonethg/minimoda-test`.
+
+## playwright.config.ts
+Es la config por defecto que genera `npm init playwright`, sin cambios:
+- `testDir: './tests'`, `fullyParallel: true`, `reporter: 'html'`, `trace: 'on-first-retry'`.
+- Solo usa Chromium. Firefox, WebKit y los perfiles móviles están comentados.
+- **`baseURL` está comentado.** No hay ninguna URL de MiniModa configurada.
+- `webServer` también está comentado. Tiene sentido, porque la app no está en el repo.
+
+## Tests que existen
+Hay un solo archivo, `tests/example.spec.ts`, con 2 tests de ejemplo:
+1. `has title` (línea 3)
+2. `get started link` (línea 10)
+
+**Ninguno prueba MiniModa.** Los dos abren `https://playwright.dev/`. La demo (`https://minimoda-navy.vercel.app/`, que figura en la descripción de `package.json`) todavía no tiene tests.
+
+## Comando que los ejecuta
+Como no hay script, el comando es:
+```
+npx playwright test
+```
+Según `evidencias/clase4-simulacion/01-playwright-example.log`, una corrida anterior dio "2 passed (3.0s)" en Chromium con 2 workers. Esa corrida no la repetí yo.
+
+## Permisos y modo visibles
+- **No hay `.claude/` en el repo**, así que no hay `settings.json` ni permisos propios del proyecto.
+- **Modo de permisos: A VERIFICAR.** Intenté leer varios archivos con un solo comando de terminal encadenado y me pidió aprobación. Eso indica que no está en modo "saltar permisos", pero el nombre exacto del modo no lo puedo ver desde acá. Podés comprobarlo con `/permissions` o en la barra de estado.
+- **Versión de Playwright instalada: A VERIFICAR.** La búsqueda de archivos no encontró `node_modules/.bin/playwright`, probablemente porque esa carpeta está ignorada por git. No corrí `npx playwright --version` porque requería aprobación.
+- **Navegadores de Playwright descargados: A VERIFICAR.** El log anterior sugiere que Chromium está instalado.
+
+Si querés empezar con MiniModa, lo natural sería cargar `baseURL` en la config y agregar un script `"test": "playwright test"`. No lo hago hasta que me lo pidas.

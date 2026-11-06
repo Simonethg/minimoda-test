@@ -1,0 +1,9 @@
+=== ls ===
+-rw-r--r--@ 1 macbook  staff   712 Nov  6 19:55 package.json
+-rw-r--r--@ 1 macbook  staff  2201 Nov  6 19:55 playwright.config.ts
+
+tests/:
+total 8
+drwxr-xr-x@  3 macbook  staff   96 Nov  6 19:55 .
+drwxr-xr-x@ 13 macbook  staff  416 Nov  6 19:55 ..
+-rw-r--r--@  1 macbook  staff  583 Nov  6 19:55 example.spec.ts

@@ -1,0 +1,45 @@
+Permission allow rule (../../.claude/settings.json): Write(//tmp/**) is not matched by file permission checks — only Edit(path) rules are. Use Edit(//tmp/**) instead (Edit rules cover all file-editing tools).
+Creé `tests/pago.spec.ts` con PAGO-01 y pasa en la demo (1 de 1 en chromium). Solo comprueba el texto «Compra confirmada»: la orden y el copy exacto del mensaje siguen sin verificar. PAGO-0X no lo agregué porque su mensaje no está confirmado.
+
+### Diff (archivo nuevo)
+```diff
++++ tests/pago.spec.ts
++import { test, expect } from '@playwright/test';
++
++// Casos: casos/pago.md · Demo: https://minimoda-navy.vercel.app/checkout
++// Datos sintéticos de la demo (sin datos reales de pago).
++const CHECKOUT_URL = 'https://minimoda-navy.vercel.app/checkout';
++
++test('PAGO-01 · compra con datos sintéticos válidos muestra «Compra confirmada»', async ({ page }) => {
++  await page.goto(CHECKOUT_URL);
++  await page.getByLabel('Nombre').fill('Ana Pérez');
++  await page.getByLabel('Dirección').fill('Calle Falsa 123');
++  await page.getByLabel('Email').fill('ana.perez@example.com');
++  await expect(page.getByLabel('País de envío')).toHaveValue('AR');
++  await page.getByLabel('Número de tarjeta').fill('4111111111111111');
++  await page.getByLabel('Vencimiento (MM/AA)').fill('12/30');
++  await page.getByLabel('CVV').fill('123');
++  await page.getByRole('button', { name: 'Confirmar compra' }).click();
++  // A VERIFICAR: copy exacto del mensaje y formato/ubicación del número de orden
++  await expect(page.getByText(/Compra confirmada/)).toBeVisible();
++});
+```
+(sin comentarios intermedios; el archivo los tiene)
+
+### Qué comprueba cada assertion
+- **`País de envío` = `AR`:** confirma que la compra usa el país por defecto de la demo. Sale del `<select>` del HTML guardado, que trae Argentina seleccionada.
+- **`getByText(/Compra confirmada/)` visible:** comprueba que la compra terminó con el mensaje esperado, no solo que se hizo clic. Uso una expresión regular porque el caso solo garantiza que el mensaje contiene esa frase, no el texto completo.
+
+### Qué corrí
+- `npx playwright test tests/pago.spec.ts --reporter=list` dos veces: **1 passed** cada vez (la segunda, después de cambiar el nombre del test).
+
+### Qué no pude verificar
+- **Orden:** quise mirar la pantalla de confirmación con un script descartable fuera del repo, pero la sesión pidió aprobación para ejecutarlo y no pude hacerlo. Como el test pasó, Playwright tampoco guardó un snapshot de la página. Sin evidencia no inventé un locator para la orden, así que no hay assertion de orden. Por eso le saqué "y orden" al nombre del test.
+- **Copy exacto** del mensaje de confirmación.
+- **PAGO-0X (CVV 12):** el mensaje «El CVV debe tener 3 o 4 dígitos.» sigue marcado A VERIFICAR en `casos/pago.md`. Como pediste, queda afuera hasta confirmarlo.
+- **Carrito vacío:** el resumen dice «Todavía no hay prendas en el carrito.» y aun así la compra se confirmó. Puede ser lo esperado en la demo o un hallazgo; habría que confirmarlo.
+
+### Para cerrar los A VERIFICAR
+Corré `npx playwright test tests/pago.spec.ts --headed` o `--ui`, o aprobá el script descartable `/tmp/minimoda-probe/probe.js`, que llena el formulario con CVV 123 y CVV 12 e imprime lo que muestra la página. Con ese texto agrego la assertion de la orden y el test de PAGO-0X.
+
+No hice commit ni agregué dependencias.

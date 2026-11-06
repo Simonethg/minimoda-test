@@ -1,0 +1,29 @@
+Permission allow rule (../../.claude/settings.json): Write(//tmp/**) is not matched by file permission checks — only Edit(path) rules are. Use Edit(//tmp/**) instead (Edit rules cover all file-editing tools).
+Actualicé `tests/pago.spec.ts` y los 2 tests pasan contra la demo.
+
+## Cambios
+- **PAGO-01:** ahora comprueba «Compra confirmada» y también `/Orden MM-\d+/`. Saqué el comentario «A VERIFICAR» de la orden, porque tu log ya la muestra (`Orden MM-797652`).
+- **PAGO-0X (nuevo):** con CVV `12` comprueba:
+  - que aparece el texto exacto «El CVV debe tener 3 o 4 dígitos.»;
+  - que el botón «Confirmar compra» sigue visible;
+  - que la URL sigue en `/checkout`;
+  - que no aparece «Compra confirmada».
+- Uso el ID `PAGO-0X` tal cual figura en `casos/pago.md`.
+- Pasé el llenado del formulario a una función `completarCheckout(page, cvv)` que usan los dos tests.
+- No hay `waitForTimeout` ni `test.skip`.
+
+## Resultado real
+```
+Running 2 tests using 2 workers
+  ✓  2 [chromium] › tests/pago.spec.ts:27:1 › PAGO-01 · compra con datos sintéticos válidos muestra «Compra confirmada» (702ms)
+  ✓  1 [chromium] › tests/pago.spec.ts:35:1 › PAGO-0X · CVV de 2 dígitos muestra error de formato y seguís en checkout (703ms)
+
+  2 passed (1.4s)
+```
+
+## Para tener en cuenta
+- Lo corrí con `--reporter=list` agregado (`npx playwright test tests/pago.spec.ts --reporter=list`) para ver la salida en consola. Corre los mismos tests que tu comando, pero no genera el reporte HTML del config.
+- Los formularios y el botón usan `getByLabel` y `getByRole`. Para los mensajes de resultado usé `getByText`, porque en el log no se ve un rol accesible (por ejemplo `alert`) para encontrarlos con `getByRole`.
+- Solo corrí Chromium, que es el único navegador activo en `playwright.config.ts`.
+- No toqué `casos/pago.md`: sus notas «A VERIFICAR» del copy de confirmación y del mensaje de CVV ahora se pueden cerrar. Si querés, las actualizo.
+- No hice commit.

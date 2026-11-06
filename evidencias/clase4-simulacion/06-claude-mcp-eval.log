@@ -1,0 +1,37 @@
+Permission allow rule (../../.claude/settings.json): Write(//tmp/**) is not matched by file permission checks — only Edit(path) rules are. Use Edit(//tmp/**) instead (Edit rules cover all file-editing tools).
+Escribí la evaluación en `docs/evaluacion-playwright-mcp.md`. Mi recomendación es **no instalarlo por ahora**.
+
+**Qué hace y qué no reemplaza:** es un servidor que deja a un agente de IA manejar un navegador real. Lee la página a través de su estructura de accesibilidad (roles y nombres de los elementos) y no por capturas de pantalla. Sirve para explorar la demo y redactar tests. No reemplaza a `npx playwright test`: no tiene suite versionada, `expect` con espera automática, resultado verde/rojo, reintentos, reporte HTML ni corridas repetibles en CI.
+
+**Beneficios para el checkout de demo:**
+1. Confirma los textos y locators reales de la pantalla en lugar de adivinarlos, como pide `tests/AGENTS.md`.
+2. Permite probar rápido casos negativos (por ejemplo, CVV de 2 dígitos) mirando la consola y la red.
+3. Genera evidencia para la clase: capturas, trazas, video y grabación que se convierte en código.
+
+**Riesgos:**
+1. Incluye por defecto una herramienta (`browser_run_code_unsafe`) que ejecuta código arbitrario, y el propio README dice que el servidor no es un límite de seguridad.
+2. Por defecto guarda la sesión del navegador en disco, abre el navegador con ventana visible y permite navegar a cualquier sitio. Lo que se escribe en la página, incluida la tarjeta de prueba, llega al contexto del agente.
+3. Se instala con `@latest` sin versión fija, y por defecto le pasa al agente las herramientas que registre la propia página, lo que habilita inyección de instrucciones. Además, dos corridas pueden seguir caminos distintos.
+
+**Por qué no instalar:**
+- El runner ya cubre los casos de pago (`tests/pago.spec.ts`).
+- El propio README recomienda Playwright CLI con skills, y no MCP, cuando se trabaja con un agente de código como Claude Code.
+- Con la configuración por defecto, el riesgo es alto.
+- Falta evidencia básica, y `AGENTS.md` pide confirmación antes de sumar dependencias.
+
+El documento incluye además la revisión de permisos, sesión, red y comandos, y las condiciones mínimas por si más adelante se aprueba.
+
+**Marcado A VERIFICAR:**
+- **Autor:** el README no lo declara; que sea de Microsoft se deduce solo de la URL.
+- **Versión:** solo aparece `@latest`, sin número ni changelog.
+- **Integridad del README:** no consta commit, fecha de descarga ni hash.
+- **Alcance de las herramientas:** hay secciones del README vacías, no hay forma documentada de desactivar `browser_run_code_unsafe`, y los valores `testing` y `config` de `--caps` no figuran en la tabla de opciones.
+- **Otros:** el README no aclara si envía telemetría ni si descarga navegadores propios.
+
+Además, los hooks de `.claude/settings.json` no cubren las herramientas de MCP, así que habría que agregarles una regla de permisos.
+
+**Qué corrí y qué no:**
+- Leí completos el README descargado, `package.json`, `playwright.config.ts`, `tests/pago.spec.ts`, `.claude/settings.json` y los dos `AGENTS.md`.
+- El hook del repo bloqueó Bash, así que usé solo herramientas de lectura.
+- No instalé nada, no edité `tests/` y no corrí `npx playwright test`, porque no cambió ningún test.
+- No consulté GitHub ni npm en vivo, así que autor y versión quedan sin confirmar.
