@@ -2,3 +2,13 @@
 *.pem
 *.key
 .DS_Store
+
+# Playwright / Node
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+*.log
+.auth/
