@@ -1,0 +1,84 @@
+Evalué el repo oficial y contrasté con `docs/evaluacion-playwright-mcp.md` y el checkout de esta práctica. **No instalé MCP.** Estoy en Ask mode: no puedo editar el doc; abajo va la evaluación completa (el archivo actual está bien de fondo, pero le faltan versión, permisos y riesgos concretos).
+
+---
+
+## Fuentes y autoría
+
+| Dato | Evidencia |
+|---|---|
+| Repo | https://github.com/microsoft/playwright-mcp — owner `microsoft` |
+| Paquete npm | `@playwright/mcp` — https://www.npmjs.com/package/@playwright/mcp |
+| Licencia | Apache-2.0 |
+| Release/npm (hoy) | **v0.0.84** (publicado 2026-10-31) |
+| Autor | Microsoft / equipo Playwright (confirmado por org GitHub + package) |
+
+**A VERIFICAR al instalar:** el tag que resuelva `@latest` ese día; el README recomienda `@playwright/mcp@latest` (versión móvil).
+
+---
+
+## Qué hace el servidor (y qué no)
+
+**Qué hace:** servidor MCP que da al agente automatización de navegador con Playwright, basada en el **árbol de accesibilidad** (`browser_snapshot`), no en visión. Expone tools para navegar, click, type/fill, tabs, consola, red (lista/detalle de requests), evaluate JS, y —en core— `browser_run_code_unsafe` (el README lo marca como RCE-equivalent).
+
+**Qué no reemplaza del runner:**
+- `npx playwright test` / `@playwright/test` (ya en el repo, `^1.65.0`)
+- Specs versionados en `tests/` con assertions (`expect`)
+- Reportes, retries, workers, CI, traces del runner
+- El acuerdo de `AGENTS.md`: correr la suite y no saltear tests
+
+El propio README distingue: MCP sirve para exploración / contexto persistente; para coding agents recomienda **Playwright CLI + SKILLS** por costo de tokens.
+
+---
+
+## 3 beneficios · checkout MiniModa
+
+1. **Mapear roles/labels** del checkout (`getByRole` / `getByLabel`) vía snapshot a11y, alineado con `tests/AGENTS.md`.
+2. **Confirmar copy** (“Compra confirmada”, error de CVV) en vivo antes de fijar assertions.
+3. **Explorar el flujo** PAGO-01 / PAGO-0X sin tocar aún `tests/pago.spec.ts`.
+
+## 3 riesgos · checkout de demo
+
+1. **Red abierta por defecto:** `--allowed-origins` default = allow all; el README dice que **no es boundary de seguridad** y **no afecta redirects** → el agente puede salir de `minimoda-navy.vercel.app`.
+2. **Sesión + datos de formulario al modelo:** perfil **persistente por defecto** (`~/Library/Caches/ms-playwright/mcp-…` en macOS); cookies/DOM y campos de tarjeta (aunque sintéticos) entran al contexto del LLM. Con `--extension` peor: reusa sesión real.
+3. **Superficie de tools fuera de los hooks del repo:** `.cursor/hooks.json` cubre Shell/Write/Edit, **no tools MCP**. `browser_evaluate` / `browser_run_code_unsafe` + lectura de bodies de red amplían abuso de herramientas (tema H05), sin el control del runner.
+
+---
+
+## Permisos, sesión, red y comandos
+
+**Comando típico (Cursor, README):**
+```json
+{ "command": "npx", "args": ["@playwright/mcp@latest"] }
+```
+Eso descarga/ejecuta el paquete (posible Chromium de Playwright). **A VERIFICAR:** si en esta máquina ya están los browsers o hay que bajarlos.
+
+| Área | Default oficial | Implicancia demo |
+|---|---|---|
+| Sesión | Perfil persistente en disco | Estado entre chats; riesgo de fuga |
+| Aislamiento | `--isolated` opcional | Mejor para práctica; no es el default |
+| Red | Todos los orígenes | Sin allowlist real de seguridad |
+| FS | Limitado a workspace (salvo `--allow-unrestricted-file-access`) | Guardrail débil, no boundary |
+| Caps | Core on; network/storage/devtools opt-in | Core ya incluye evaluate + run_code_unsafe + network_requests |
+| Seguridad | README: *“Playwright MCP is **not** a security boundary”* | No sustituye reglas del repo |
+
+Mitigaciones si algún día se instalara: `--isolated`, `--allowed-origins=https://minimoda-navy.vercel.app` (consciente de que no es boundary), pin de versión, sin extension, sin datos reales, sin `--secrets` en el repo.
+
+---
+
+## Sobre `docs/evaluacion-playwright-mcp.md`
+
+Ya existe y la **decisión “No instalar”** sigue siendo la correcta. Mejoraría solo con: versión `0.0.84`, cita de “not a security boundary”, perfil persistente, `browser_run_code_unsafe`, y que los hooks no cubren MCP. En Ask mode no puedo editarlo; en Agent mode sí.
+
+---
+
+## Recomendación
+
+**No instalar** Playwright MCP en esta práctica.
+
+Justificación con fuentes:
+1. Ya tenés PAGO-01/PAGO-0X en `tests/pago.spec.ts` y el flujo de trabajo es el runner (`AGENTS.md`).
+2. El README oficial posiciona MCP como exploración, no como reemplazo del test runner; para agentes de código apunta a CLI+SKILLS.
+3. El checkout maneja campos de pago; el default (perfil persistente + orígenes libres + tools potentes) aumenta superficie sin que los hooks del repo la acoten.
+4. Instalar hoy sería `npx …@latest` → dependencia móvil y proceso fuera del alcance “solo demo / sin secretos”.
+
+Si más adelante necesitás exploración asistida, evaluá de nuevo con versión pineada, `--isolated` y allowlist documentada — o Playwright CLI+SKILLS — no el install “one-click” del marketplace.

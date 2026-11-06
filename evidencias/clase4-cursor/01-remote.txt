@@ -1,0 +1,2 @@
+origin	git@github-simonethg:Simonethg/minimoda-test.git (fetch)
+origin	git@github-simonethg:Simonethg/minimoda-test.git (push)

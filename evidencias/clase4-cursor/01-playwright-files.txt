@@ -1,0 +1,7 @@
+-rw-r--r--@ 1 macbook  staff  2201  6 nov.  20:12 playwright.config.ts
+
+tests/:
+total 8
+drwxr-xr-x@  3 macbook  staff   96  6 nov.  20:12 .
+drwxr-xr-x@ 13 macbook  staff  416  6 nov.  20:12 ..
+-rw-r--r--@  1 macbook  staff  583  6 nov.  20:12 example.spec.ts
