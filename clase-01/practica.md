@@ -48,7 +48,8 @@ Exploré manualmente los formularios de registro e inicio de sesión de MiniModa
 ## 6. Mis 3 mejores casos (cargados en Qase, proyecto MiniModa)
 Formato del título: `Registro: <qué se prueba>`
 
-Captura de la suite en Qase con tus casos: `evidencias/qase-suite-casos.png`
+Captura de la suite en Qase con tus casos: `evidencias/qase-suite-casos.jpeg`
+
 
 ### Caso 1: MM-1 – Registro: alta con datos válidos
 - Precondiciones: El formulario de registro de MiniModa está disponible y los campos se encuentran vacíos.
@@ -59,8 +60,9 @@ Captura de la suite en Qase con tus casos: `evidencias/qase-suite-casos.png`
   4. Ingresar `25` en Edad.
   5. Seleccionar Argentina en País y aceptar los términos y condiciones.
   6. Presionar el botón Crear cuenta.
-- Resultado esperado: El formulario debe permitir completar el registro cuando todos los datos cumplen las validaciones. El mensaje de confirmación final queda **A VERIFICAR**.
-- Evidencia: `evidencias/qase-MM-1-registro-alta-exitosa.png`
+- Resultado esperado: El formulario debe permitir completar el registro cuando todos los datos cumplen las validaciones y mostrar el mensaje '¡Registro exitoso! Bienvenido/a a MiniModa, Sofía Martínez. Te enviamos un email de bienvenida (ver Bandeja).'.
+- Resultado observado: Realicé una prueba manual con datos válidos utilizando el nombre `jose`, el email `jose@ramon.com` y la edad `23`. El registro se completó correctamente y apareció el mensaje '¡Registro exitoso! Bienvenido/a a MiniModa, jose. Te enviamos un email de bienvenida (ver Bandeja).'. Esto confirma el comportamiento esperado del formulario, aunque la ejecución se realizó con datos diferentes a los definidos en el caso de Qase.
+- Evidencia: `evidencias/qase-MM-1-registro-alta-exitosa.jpeg`
 
 ### Caso 2: MM-2 – Registro: contraseña inferior a 8 caracteres
 - Precondiciones: El formulario de registro está disponible y los campos se encuentran vacíos.
@@ -70,8 +72,9 @@ Captura de la suite en Qase con tus casos: `evidencias/qase-suite-casos.png`
   3. Seleccionar Argentina y aceptar los términos y condiciones.
   4. Ingresar `Prueba1` en Contraseña y Confirmar contraseña.
   5. Presionar Crear cuenta.
-- Resultado esperado: El sistema debe impedir el registro porque la contraseña contiene solamente 7 caracteres. Se espera el mensaje «La contraseña debe tener al menos 8 caracteres.», comprobado previamente durante la exploración manual.
-- Evidencia: `evidencias/qase-MM-2-registro-password-7.png`
+- Resultado esperado: El sistema debe impedir el registro porque la contraseña contiene solamente 7 caracteres y mostrar el mensaje 'La contraseña debe tener al menos 8 caracteres.'.
+- Resultado observado: Durante la exploración manual comprobé que el sistema detecta contraseñas inferiores a 8 caracteres y muestra el mensaje de validación correspondiente, impidiendo completar el registro.
+- Evidencia: `evidencias/qase-MM-2-registro-password-7.jpeg`
 
 ### Caso 3: MM-3 – Registro: validación de valores límite de edad
 - Precondiciones: El formulario de registro está disponible y los demás campos se pueden completar con datos válidos.
@@ -81,8 +84,10 @@ Captura de la suite en Qase con tus casos: `evidencias/qase-suite-casos.png`
   3. Repetir el escenario con la edad `13`.
   4. Repetir el escenario con la edad `120`.
   5. Repetir el escenario con la edad `121`.
-- Resultado esperado: El sistema debe rechazar las edades 12 y 121 y aceptar 13 y 120 como valores válidos para el campo Edad. Las pruebas manuales realizadas coincidieron con estos resultados. Para las edades rechazadas, el formulario indica que la edad debe estar entre 13 y 120 años.
-- Evidencia: `evidencias/qase-MM-3-registro-edad-limites.png`
+- Resultado esperado: El sistema debe aceptar las edades 13 y 120 y rechazar las edades 12 y 121. Cuando se ingresa una edad fuera del rango permitido, debe mostrar el mensaje 'La edad debe estar entre 13 y 120.'.
+- Resultado observado: Comprobé manualmente los cuatro valores límite. Las edades 13 y 120 fueron aceptadas, mientras que 12 y 121 fueron rechazadas. El formulario mostró el mensaje de error correspondiente para las edades fuera del rango.
+- Evidencia: `evidencias/qase-MM-3-registro-edad-limites.jpeg`
+
 
 ## 7. Mapa del harness
 | Pieza | En lo que usé |
