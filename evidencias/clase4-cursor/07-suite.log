@@ -1,0 +1,20 @@
+
+Running 4 tests using 4 workers
+
+(node:39235) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:39233) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:39234) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:39236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/4] [chromium] › tests/pago.spec.ts:19:1 › PAGO-0X · CVV de dos dígitos muestra error de formato
+[2/4] [chromium] › tests/pago.spec.ts:5:1 › PAGO-01 · completar compra con datos sintéticos válidos
+[3/4] [chromium] › tests/example.spec.ts:10:1 › get started link
+[4/4] [chromium] › tests/example.spec.ts:3:1 › has title
+  4 passed (1.4s)

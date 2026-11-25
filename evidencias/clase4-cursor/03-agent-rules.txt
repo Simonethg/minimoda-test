@@ -1,0 +1,52 @@
+## Fuentes comprobadas en este repo
+
+| Fuente | Ruta | ¿Cargada en esta sesión? |
+|--------|------|---------------------------|
+| AGENTS raíz | `AGENTS.md` | **Sí** — aparece en `always_applied_workspace_rules` |
+| AGENTS de tests | `tests/AGENTS.md` | **Sí, al leer archivos bajo `tests/`** — Cursor lo adjuntó al abrir ese path |
+| Rule Cursor | `.cursor/rules/minimoda-testing.mdc` | **Sí** — `alwaysApply: true`, globs `["**/*"]` |
+| Hooks | `.cursor/hooks.json` | **Existe en disco**; no es texto de instrucciones inyectado al prompt. Son hooks de runtime (`preToolUse`, `beforeShellExecution`, `afterFileEdit`) que ejecutan scripts en `scripts/` |
+| Skill del repo | `.cursor/skills/caso-a-playwright/SKILL.md` | **Listada** en el catálogo de skills disponibles; el cuerpo completo **no** viene preinyectado: se lee on-demand si aplica |
+
+No invento otras fuentes del repo: solo hay esos 2 `AGENTS.md`, 1 rule `.mdc`, 1 `hooks.json` y 1 skill bajo `.cursor/`.
+
+*(Fuera del repo también hay user rules / system de Cursor; no las listo como “del proyecto”.)*
+
+---
+
+## Reglas generales (repo / always)
+
+De `AGENTS.md` + el resumen de `.cursor/rules/minimoda-testing.mdc`:
+
+- Solo este repo y la demo MiniModa  
+- Sin producción ni datos reales de pago  
+- Sin secretos/tokens/claves  
+- Confirmar antes de dependencias nuevas  
+- No borrar ni saltear tests para “verde”  
+- Tras cambiar tests: `npx playwright test`  
+- Informar qué se corrió y qué no se verificó  
+- La rule refuerza: seguir ambos AGENTS, solo demo, sin secretos, sin `test.skip`/`fixme`
+
+## Reglas solo de `tests/` (`tests/AGENTS.md`)
+
+- `getByRole` / `getByLabel` con nombres observados en la UI  
+- Sin `waitForTimeout` ni esperas fijas  
+- ID del caso en el nombre del test  
+- Assertions sobre el resultado esperado en UI  
+- Si falta texto/locator → `A VERIFICAR`; no inventar  
+- Sin `test.skip` / `test.fixme`  
+- Demo permitida: `https://minimoda-navy.vercel.app/checkout`
+
+---
+
+## Qué recibiría un archivo en `src/`
+
+No hay carpeta `src/` en el repo ahora; esto es por herencia de paths.
+
+`src/` sería **hermana** de `tests/`, no descendiente. Un archivo como `src/foo.ts`:
+
+1. **Sí hereda** lo de alcance repo: `AGENTS.md` raíz y la rule `.cursor/rules/minimoda-testing.mdc` (`alwaysApply` + `**/*`).
+2. **No hereda por path** el `tests/AGENTS.md`: ese archivo se adjunta por proximidad al árbol `tests/`, no a carpetas hermanas.
+3. **Matiz:** la rule always dice “Seguí AGENTS.md y tests/AGENTS.md”, así que el agente **puede** verse obligado a aplicar también las convenciones de tests por instrucción explícita de la rule, aunque el archivo no esté bajo `tests/`. Eso no es herencia de carpeta; es un always-rule del proyecto.
+4. **Hooks:** si editaras/ejecutaras herramientas que matchean, `.cursor/hooks.json` podría disparar scripts; eso no equivale a “cargar AGENTS de tests en contexto”.
+5. **Skill `caso-a-playwright`:** solo si la tarea encaja y se lee el `SKILL.md`; no se aplica sola a todo `src/`.
